@@ -9,7 +9,7 @@ class Solution {
 			result[i] = result[i / 2];
 			result[i + 1] = result[i] + 1;
 		}
-		if (num % 2 == 0) {
+		if ((num & 1) == 0) {
 			result[num] = result[num / 2];
 		}
 		return result;
