@@ -9,14 +9,13 @@ class Solution:
         for stone in stones:
             # 对neg_max单独处理
             if neg_max >= stone and dp[neg_max - stone]:
-                dp[neg_max] = True
-                break
+                return total - 2 * neg_max
 
             # 从neg_max - 1开始
             for neg_can in range(neg_max - 1, stone - 1, -1):
                 dp[neg_can] |= dp[neg_can - stone]
 
-        for neg_can in range(neg_max, - 1, -1):
+        for neg_can in range(neg_max - 1, - 1, -1):
             if dp[neg_can]:
                 return total - 2 * neg_can
 
