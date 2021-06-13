@@ -3,16 +3,10 @@ from typing import List
 
 class Solution:
     def largestNumber(self, cost: List[int], target: int) -> str:
-        # discard: cost相同的数字取最大的，对其他的标记一下不再使用
-        dp, discard = [0] * (target + 1),  [False] * 9
-        for i in range(8, -1, -1):
-            if cost[i] <= target and dp[cost[i]] == 0:
-                dp[cost[i]] = i + 1
-            else:
-                discard[i] = True
-
-        # 遍历digit时使用倒序，这样数字越来越小，挨个往后加即可
-        for i in (i_ for i_ in range(8, -1, -1) if not discard[i_]):
+        dp = [0] * (target + 1)
+        # 遍历digit时使用倒序，这样数字越来越小，挨个往后加即可；cost相同的数字取最大的，后面再出现直接忽略
+        for i in (i_ for i_ in range(8, -1, -1) if cost[i_] <= target and dp[cost[i_]] == 0):
+            dp[cost[i]] = i + 1
             for total in range(cost[i], target + 1):
                 if dp[total - cost[i]] != 0:
                     dp[total] = max(dp[total], dp[total - cost[i]] * 10 + i + 1)
