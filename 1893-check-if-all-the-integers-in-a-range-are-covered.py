@@ -3,19 +3,18 @@ from typing import List
 
 class Solution:
     def isCovered(self, ranges: List[List[int]], left: int, right: int) -> bool:
-        range_buckets = [0] * 51
-        for range_ in ranges:
-            range_left = left if range_[0] <= left else range_[0]
-            range_right = right if range_[1] >= right else range_[1]
-            range_buckets[range_left] = max(range_buckets[range_left], range_right)
-        covered, checked = range_buckets[left], left
-        while covered < right:
-            covered_bak = covered
-            for i in range(checked + 1, covered + 2):
-                covered = max(covered, range_buckets[i])
-            if covered == covered_bak:
-                return False
+        diff = [0] * 52
+        for l, r in ranges:
+            if l > right or r < left:
+                continue
+            diff[left if l < left else l] += 1
+            diff[(right if r > right else r) + 1] -= 1
 
+        curr = diff[left - 1]
+        for i in range(left, right + 1):
+            curr += diff[i]
+            if curr <= 0:
+                return False
         return True
 
 
