@@ -5,18 +5,16 @@ using namespace std;
 class Solution {
 public:
 	int lastRemaining(int n) {
-		int a1 = 1, an = n;
-		int round = 0, cnt = n, step = 1;
+		int a1 = 1, cnt = n, step = 1;
+		bool forword = true;
 		while (cnt > 1) {
-			if (round % 2 == 0) {
+			if (forword) {
 				a1 = a1 + step;
-				an = (cnt % 2 == 0) ? an : an - step;
 			}
 			else {
-				a1 = (cnt % 2 == 0) ? a1 : a1 + step;
-				an = an - step;
+				a1 = ((cnt & 1) == 0) ? a1 : a1 + step;
 			}
-			++round;
+			forword = !forword;
 			cnt >>= 1;
 			step <<= 1;
 		}
