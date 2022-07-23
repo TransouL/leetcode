@@ -7,14 +7,12 @@ class Solution:
         ans, n, m = 0, len(intervals), 2
         vars = [[] for _ in range(n)]
         for i in range(n - 1, -1, -1):
-            j = intervals[i][0]
-            for k in range(len(vars[i]), m):
+            for j in range(intervals[i][0], intervals[i][0] + m - (len(vars[i]))):
                 ans += 1
                 for p in range(i - 1, -1, -1):
                     if intervals[p][1] < j:
                         break
                     vars[p].append(j)
-                j += 1
         return ans
 
 
